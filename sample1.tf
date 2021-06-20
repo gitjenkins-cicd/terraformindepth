@@ -12,6 +12,14 @@ resource "aws_security_group" "instance" {
         cidr_blocks=["0.0.0.0/0"]
 
     }
+    ingress {
+        from_port=22
+        to_port=22
+        protocol="ssh"
+        cidr_blocks=["0.0.0.0/0"]
+
+    }
+
     lifecycle {
       create_before_destroy=true
     }
@@ -23,6 +31,8 @@ resource "aws_security_group" "instance" {
 resource "aws_instance"  "example1" {
     ami="ami-001f026eaf69770b4"
     instance_type="t2.micro"
+    subnet_id     = "subnet-7ba31e33"
+    key_name="ec2june17"
     count = 2
     private_ip="${lookup(var.ips,count.index)}"
     vpc_security_group_ids=["${aws_security_group.instance.id}"]
