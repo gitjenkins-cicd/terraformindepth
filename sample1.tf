@@ -36,6 +36,7 @@ resource "aws_instance"  "example1" {
     count = 2
     private_ip="${lookup(var.ips,count.index)}"
     vpc_security_group_ids=["${aws_security_group.instance.id}"]
+    cpu_core_count=1
     tags = {
         Name="terraform-example-instance"
     }

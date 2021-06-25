@@ -14,7 +14,8 @@ resource "aws_launch_configuration" "example" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instance.id]
   count = 5
-  private_ip = "${lookup(ips,count.index)}" 
+  #private_ip = "${lookup(ips,count.index)}" 
+  private_ip="${lookup(var.ips,count.index)}"
 
   user_data = <<-EOF
               #!/bin/bash
